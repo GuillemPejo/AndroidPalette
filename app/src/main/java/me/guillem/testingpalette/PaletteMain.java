@@ -1,4 +1,5 @@
 package me.guillem.testingpalette;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
@@ -30,15 +31,23 @@ public class PaletteMain extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_palette);
 
         rootLayout = findViewById(R.id.root_layout);
         textViewTitle = findViewById(R.id.textTitle);
         textViewBody = findViewById(R.id.textBody);
         imageView = findViewById(R.id.imageView);
 
-        Bitmap bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
+        Intent intent = getIntent();
+        Bitmap bitmap = ((Bitmap) intent.getParcelableExtra("BitmapImage"));
+        imageView.setImageBitmap(bitmap);
+        imageView.getLayoutParams().height = 250;
+        imageView.getLayoutParams().width = 250;
+        imageView.requestLayout();
 
+        LinearLayout.LayoutParams parms = new LinearLayout.LayoutParams(250,250);
+        imageView.setLayoutParams(parms);
+        //Bitmap bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
         Palette.from(bitmap).maximumColorCount(32).generate(new Palette.PaletteAsyncListener() {
             @Override
             public void onGenerated(Palette palette) {
