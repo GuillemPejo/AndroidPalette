@@ -1,4 +1,5 @@
 package me.guillem.testingpalette;
+
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -37,10 +38,10 @@ public class PaletteMain extends AppCompatActivity {
         textViewTitle = findViewById(R.id.textTitle);
         textViewBody = findViewById(R.id.textBody);
         imageView = findViewById(R.id.imageView);
+        Bitmap bitmap = null;
 
-        Intent intent = getIntent();
-        Bitmap bitmap = ((Bitmap) intent.getParcelableExtra("BitmapImage"));
-        imageView.setImageBitmap(bitmap);
+        imageFrom(imageView);
+
         imageView.getLayoutParams().height = 250;
         imageView.getLayoutParams().width = 250;
         imageView.requestLayout();
@@ -49,6 +50,7 @@ public class PaletteMain extends AppCompatActivity {
         imageView.setLayoutParams(parms);
         //Bitmap bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
         Palette.from(bitmap).maximumColorCount(32).generate(new Palette.PaletteAsyncListener() {
+
             @Override
             public void onGenerated(Palette palette) {
                 vibrantSwatch = palette.getVibrantSwatch();
@@ -57,8 +59,25 @@ public class PaletteMain extends AppCompatActivity {
                 mutedSwatch = palette.getMutedSwatch();
                 lightMutedSwatch = palette.getLightMutedSwatch();
                 darkMutedSwatch = palette.getDarkMutedSwatch();
+
+                textViewBody.setText(vibrantSwatch.toString());
+
+
             }
         });
+    }
+
+    public void imageFrom(ImageView imageView){
+        Bitmap bitmap;
+        if(getIntent()!=null){
+            Intent intent = getIntent();
+            bitmap = ((Bitmap) intent.getParcelableExtra("BitmapImage"));
+            imageView.setImageBitmap(bitmap);}
+        else{
+            imageView.setImageResource(R.drawable.image);
+            bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
+        }
+
     }
 
     public void next(View v) {

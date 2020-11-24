@@ -22,7 +22,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TestingPalette">
-        <activity android:name=".TakePhoto">
+        <activity android:name=".PaletteMain">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -30,7 +30,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".PaletteMain"
+            android:name=".TakePhoto"
             android:theme="@style/Theme.TestingPalette.NoActionBar" />
     </application>
 
